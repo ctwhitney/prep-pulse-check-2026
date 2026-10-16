@@ -1,0 +1,25 @@
+# RStudio files
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+# Local environment and operating system files
+.Renviron
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary files and logs
+*.tmp
+*.bak
+*.log
+
+# Local environment files (may contain credentials)
+.env
+.env.*
+
+# Locally generated API data
+/data/raw_water_quality_observations.csv
+/data/raw_water_quality_retrieval.csv
+/data/processed/
