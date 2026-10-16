@@ -6,7 +6,7 @@ You do not need prior experience with R to get started, although you will need t
 
 ### Step 1: Visit the GitHub repository
 
-Open the PREP Science Pulse 2026 repository on GitHub: **[insert repository URL]**.
+Open the PREP Science Pulse 2026 repository on GitHub: **[PREP Science Pulse 2026 repository](https://github.com/ctwhitney/prep-pulse-check-2026)**.
 
 The repository contains the R scripts, the eelgrass coverage data file used in the analysis, and the three finished figures. You can view the figures directly on GitHub without installing anything. To recreate them yourself, continue with the steps below.
 
