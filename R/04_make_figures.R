@@ -172,9 +172,7 @@ ggsave(
 )
 
 # ------------------------------------------------------------
-
 # 3. Total suspended solids and chlorophyll a
-
 # ------------------------------------------------------------
 
 support_summary <- annual_summary %>%
@@ -185,34 +183,24 @@ support_summary <- annual_summary %>%
     )
   ) %>%
   mutate(
-      Station = factor(
-        recode(samplingfeaturecode, !!!station_names),
-        levels = station_levels
-      ),
-      Variable = recode(
-        analysis_variable,
-        "Solids, Suspended Total" = "Total suspended solids",
-        "Chlorophyll a" = "Chlorophyll a"
-      )
+    Station = factor(
+      recode(samplingfeaturecode, !!!station_names),
+      levels = station_levels
+    ),
+    Variable = recode(
+      analysis_variable,
+      "Solids, Suspended Total" = "Total suspended solids",
+      "Chlorophyll a" = "Chlorophyll a"
+    )
   )
 
-support_labels <- c(
-  "Total suspended solids" = ' "Total suspended solids (" * mg ~ L^{-1} * ")" ',
-  "Chlorophyll a" = ' "Chlorophyll a (" * mu * g ~ L^{-1} * ")" '
-)
-
+# Bold the panel labels while keeping the unit notation
+# in the selected plotmath expressions.
 support_labels <- c(
   "Total suspended solids" =
     'bold("Total suspended solids (" * mg ~ L^{-1} * ")")',
   "Chlorophyll a" =
     'bold("Chlorophyll a (" * mu * g ~ L^{-1} * ")")'
-)
-
-support_labels <- c(
-  "Total suspended solids" =
-    'bold("Total suspended solids (" * mg ~ L^{bold(-1)} * ")")',
-  "Chlorophyll a" =
-    'bold("Chlorophyll a (" * bold(mu) * bold(g) ~ L^{bold(-1)} * ")")'
 )
 
 # Break lines across gaps in monitoring.
@@ -228,35 +216,45 @@ support_summary <- support_summary %>%
 
 support_plot <- ggplot(
   support_summary,
-  aes(x = Year, y = median_value, color = Station, fill = Station)
+  aes(
+    x = Year,
+    y = median_value,
+    color = Station,
+    fill = Station
+  )
 ) +
   geom_ribbon(
-    aes(group = interaction(samplingfeaturecode, line_group), ymin = q25, ymax = q75),
+    aes(
+      group = interaction(samplingfeaturecode, line_group),
+      ymin = q25,
+      ymax = q75
+    ),
     alpha = 0.15,
     color = NA
   ) +
-  geom_line(aes(group = interaction(samplingfeaturecode, line_group)), linewidth = 0.7) +
+  geom_line(
+    aes(group = interaction(samplingfeaturecode, line_group)),
+    linewidth = 0.7
+  ) +
   geom_point(size = 1.5) +
   facet_wrap(
     ~Variable,
     scales = "free_y",
     ncol = 1,
-    labeller = as_labeller(support_labels, default = label_parsed)
+    labeller = as_labeller(
+      support_labels,
+      default = label_parsed
+    )
   ) +
-  # facet_wrap(~Variable, scales = "free_y", ncol = 1) +
   labs(
-    # title = "Other water-quality indicators",
-    # subtitle = "Annual medians and interquartile ranges",
     x = NULL,
     y = "Annual median",
     color = NULL,
     fill = NULL
-    # caption = paste(
-    #   "Shaded bands show the 25th–75th percentile range.",
-    #   "Units should be added to each panel after checking the source metadata."
-    # )
   ) +
-  scale_x_continuous(breaks = seq(2000, 2025, by = 5)) +
+  scale_x_continuous(
+    breaks = seq(2000, 2025, by = 5)
+  ) +
   theme_bw(base_size = 12) +
   theme(
     legend.position = "bottom",
